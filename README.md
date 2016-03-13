@@ -23,10 +23,24 @@ This part is done by "tweet_continent_api.py"
 
 
 #### Alerting
-This part is with the front end
-
-#### Web
-
+This part is with the front end and can be seen in "index.html"
+- Every second, the data will be re-read from redis
 
 
+#### Data Visulization
+This part is with the front end and can be seen in "index.html"
+- Similar to the alerting part
+
+
+
+
+### How to start
+1. Start a local Redis Server with default settings. (If not installed, it can be installed by Homebrew: 
+    ```brew install redis```)
+2. Run tweet_continent_insert.py in a seperate terminal
+3. Run tweet_continent_decrement.py in a seperate terminal
+4. Run tweet_continent_api.py in a seperate terminal (This will start Flask server at 5000 port. If not installed, it can be installed by Pip: ```pip install Flask```)
+4. Open index.html
+
+Enjoy!
 
