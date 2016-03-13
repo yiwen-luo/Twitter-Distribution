@@ -29,8 +29,7 @@ This part is with the front end and can be seen in "index.html"
 
 #### Data Visulization
 This part is with the front end and can be seen in "index.html"
-- Similar to the alerting part, an HTTP request is sent to API (http://localhost:5000/ in this case) and the API will return the distribution of
-
+- Similar to the alerting part, an HTTP request is sent to API (http://localhost:5000/ in this case) and the API will return the distribution of tweets from all possible areas around the world. This part utilizes CanvasJS library for real-time data visualization. The bar chart is showing the probability of each elements in the distribution with colors. If the probability is more than 50%, it is red, and yellow for more than 25%, and green for the rest. Detailed probabilities are also shown.
 
 
 
