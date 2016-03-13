@@ -24,12 +24,12 @@ This part is done by "tweet_continent_api.py"
 
 #### Alerting
 This part is with the front end and can be seen in "index.html"
-- Every second, the data will be re-read from redis
+- Every second, a request with "Mainland China" vairable is sent to API (http://localhost:5000/distrbution in this case) and the API will return the probability of the tweet from Mainland China. Normally, the data should be very small since the only with special technology, people can post tweets in Mainland China under internet censorship. The normal data should be less than 0.1%. In that case, a pop up alert will show up if the probability is more than 0.1%, which may indicats the loosing or relaxing of the sensorship of Mainland China.
 
 
 #### Data Visulization
 This part is with the front end and can be seen in "index.html"
-- Similar to the alerting part
+- Similar to the alerting part, an HTTP request is sent to API (http://localhost:5000/ in this case) and the API will return the distribution of
 
 
 
