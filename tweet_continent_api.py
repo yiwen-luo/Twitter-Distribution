@@ -7,6 +7,8 @@ import numpy as np
 app = flask.Flask(__name__)
 conn = redis.Redis()
 
+def get_rate():
+    return 1.0
 
 def get_data():
     keys = conn.keys()
@@ -17,10 +19,20 @@ def get_data():
     return {key: float(items[key]) / z for key in keys}
 
 
-@app.route("/")
+@app.route('/')
+def index():
+    """ Displays the index page accessible at '/'
+    """
+    return flask.render_template('index.html')
+
+
+@app.route("/distribution")
 def histogram():
     raw_data = get_data()
     # Just return the parsed data and return to the route "/"
+    # raw_data1 = {}
+    # for key in raw_data:
+    #     raw_data1[key] = str(raw_data[key])
     return json.dumps(raw_data)
 
 
@@ -54,6 +66,11 @@ def probability():
         "continent": continent,
         "prob": float(c) / z,
     })
+
+
+@app.route("/rate")
+def rate():
+    return json.dumps({"rate": get_rate()})
 
 
 if __name__ == "__main__":

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script type="text/javascript">
+	window.onload = function () {
+
+		//initial value of dataPoints
+		var dps = [
+		{label: "North America", y: 0.0},
+		{label: "South America", y: 0.0},
+		{label: "Europe", y: 0.0},
+		{label: "Africa", y: 0.0},
+		{label: "Asia (except Mainland China)", y: 0.0},
+		{label: "Mainland China", y: 0.0}
+		];
+
+		var listOfCont = ["North_America", "South_America", "Europe", "Africa", "Asia", "China"];
+
+		var chart = new CanvasJS.Chart("chartContainer",{
+			title: {
+				text: "Probability of continents Tweets from"
+			},
+			axisY: {
+				suffix: ""
+			},
+			legend :{
+				verticalAlign: 'bottom',
+				horizontalAlign: "center"
+			},
+			data: [
+			{
+				type: "column",
+				bevelEnabled: true,
+				indexLabel: "{y}",
+				dataPoints: dps
+			}
+			]
+		});
+
+
+		var updateInterval = 1000;
+
+		var url = "http://127.0.0.1:5000/distribution";
+		var updateChart = function () {
+
+			var updateData
+
+
+			$.getJSON(url, function(data){
+			    updateData=data;
+			    console.log(updateData);
+
+
+                for (var i = 0; i < dps.length; i++) {
+
+                    // generating random variation deltaY
+                    var yVal = updateData[listOfCont[i]];
+                    var continentColor;
+
+
+                    // color of dataPoint dependent upon y value.
+
+                    continentColor =
+                    yVal > 0.5 ? "#FF2500":
+                    yVal >= 0.25 ? "#FF6000":
+                    yVal < 0.25 ? "#6B8E23 ":
+                    null;
+
+
+                    // updating the dataPoint
+                    dps[i] = {label: dps[i]["label"] , y: yVal, color: continentColor};
+
+                    if (i == (dps.length-1) && yVal > 0.1){
+                        alert("Mainland China's rate is high!");
+                    }
+
+                };
+
+                chart.render();
+			});
+		};
+
+		updateChart();
+
+		// update chart after specified interval
+		setInterval(function(){updateChart()}, updateInterval);
+
+
+	}
+
+
+
+
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='canvasjs/canvasjs.min.js') }}"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100;">
+</div>
+</body>
+</html>
