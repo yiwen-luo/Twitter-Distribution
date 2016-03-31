@@ -19,7 +19,7 @@ This part is done by "tweet_continent_decrement.py"
 
 #### API
 This part is done by "tweet_continent_api.py"
-- The API part runs Python Flask on port 5000. It retrieves tuples from Redis and calculate the distrubtion of each of the area's tweets ratio by providing API at "/". Also, it calculates the entropy of the distribution and provids API at "/entropy". In addtion, it provides the probability API at "/probability" where the request parameter should be the area name and the return value will be the probability of the tweet posts in that area.
+- The API part runs Python Flask on port 5000. It retrieves tuples from Redis and calculate the distrubtion of each of the area's tweets ratio by providing API at "/distribution". Also, it calculates the entropy of the distribution and provids API at "/entropy". In addtion, it provides the probability API at "/probability" where the request parameter should be the area name and the return value will be the probability of the tweet posts in that area.
 
 
 #### Alerting
