@@ -3,17 +3,18 @@ from flask import request
 import redis
 import json
 import numpy as np
+import random
 
 app = flask.Flask(__name__)
 conn = redis.Redis()
 
-def get_rate():
-    return 1.0
 
 def get_data():
-    keys = conn.keys()
+    # keys = conn.keys()
+    keys = ["North_America", "South_America", "Europe", "Africa", "Oceania", "Asia", "China"]
     # Parse data into a python dict for convenient manipulations
     items = {key: conn.mget(key)[0] for key in keys}
+    print items
     # Sum of the counts for calculation of distribution
     z = sum([float(items[key]) for key in keys])
     return {key: float(items[key]) / z for key in keys}
@@ -29,10 +30,6 @@ def index():
 @app.route("/distribution")
 def histogram():
     raw_data = get_data()
-    # Just return the parsed data and return to the route "/"
-    # raw_data1 = {}
-    # for key in raw_data:
-    #     raw_data1[key] = str(raw_data[key])
     return json.dumps(raw_data)
 
 
@@ -70,7 +67,16 @@ def probability():
 
 @app.route("/rate")
 def rate():
-    return json.dumps({"rate": get_rate()})
+    rates = {}
+    rates["NA_rate"] = 1.0 / (float(conn.get("NA_now")) - float(conn.get("NA_last")))
+    rates["SA_rate"] = 1.0 / (float(conn.get("SA_now")) - float(conn.get("SA_last")))
+    rates["EU_rate"] = 1.0 / (float(conn.get("EU_now")) - float(conn.get("EU_last")))
+    rates["AF_rate"] = 1.0 / (float(conn.get("AF_now")) - float(conn.get("AF_last")))
+    rates["OC_rate"] = 1.0 / (float(conn.get("OC_now")) - float(conn.get("OC_last")))
+    rates["AS_rate"] = 1.0 / (float(conn.get("AS_now")) - float(conn.get("AS_last")))
+    rates["CN_rate"] = 1.0 / (float(conn.get("CN_now")) - float(conn.get("CN_last")))
+
+    return json.dumps(rates)
 
 
 if __name__ == "__main__":
